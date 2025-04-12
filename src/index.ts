@@ -8,6 +8,7 @@ const PORT = 3000;
 app.use(express.json());
 app.use('/usuarios', usuarioRoutes);
 
+
 app.get('/', async (req, res) => {
   try {
     const [rows] = await pool.query('SELECT 1+1 AS resultado');

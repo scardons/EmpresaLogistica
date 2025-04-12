@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { crearUsuario } from '../models/usuarioModel';
 import bcrypt from 'bcrypt';
 
-export const registrar = async (req: Request, res: Response) => {
+export async function registrar(req: Request, res: Response): Promise<any> {
   const { nombre, email, password } = req.body;
 
   if (!nombre || !email || !password) {
@@ -11,9 +11,11 @@ export const registrar = async (req: Request, res: Response) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
+    
     await crearUsuario(nombre, email, hashedPassword);
-    res.status(201).json({ message: 'usuario registrado correctamente' });
+
+    return res.status(201).json({ message: 'Usuario registrado correctamente' });
   } catch (error) {
-    res.status(500).json({ message: 'Error al registrar el usuario', error });
+    return res.status(500).json({ message: 'Error al registrar el usuario', error });
   }
-};
+}
