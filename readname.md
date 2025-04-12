@@ -10,3 +10,6 @@ luego npm init -y para crear el package.json
 * Creo el index.ts para que corra en el puerto 3000
 * Package.json ponemos esto en script   "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
 * Luego hacemos correr el puerto con npm run dev
+* Creamos una tabla en la bd usuario
+* Creamos un modelo con la consulta usuario
+* creamos el controlador usuario
