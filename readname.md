@@ -13,3 +13,5 @@ luego npm init -y para crear el package.json
 * Creamos una tabla en la bd usuario
 * Creamos un modelo con la consulta usuario
 * creamos el controlador usuario
+* creamos en login en el conrolador, modelo, router con .env y token 
+* npm install dotenv

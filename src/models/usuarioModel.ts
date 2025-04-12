@@ -1,3 +1,4 @@
+import { promises } from 'dns'
 import {pool} from '../config/db'
 
 export async function crearUsuario(nombre:string, email:string, password:string, rol = 'cliente') {
@@ -6,4 +7,9 @@ export async function crearUsuario(nombre:string, email:string, password:string,
         [nombre, email, password, rol]
     )
     return result
+}
+
+export async function obtenerUsuarioPorEmail(email: string): Promise<any>{
+    const[rows]: any = await pool.query('SELECT * FROM usuarios WHERE email = ?', [email])
+    return rows[0]
 }
