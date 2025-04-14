@@ -19,3 +19,4 @@ luego npm init -y para crear el package.json
 * instale docker luego lo configure con redis
 * se creo en la carpeta utils redisCliente y se organizo el index.ts
 * Para crear pruebas unitarias instalamos jest y pusimos una carpeta de test en la parte de afuera de src para mantener separado las pruebas del codigo de produccion
+* Realizamos test de login y de register y sale todo OK

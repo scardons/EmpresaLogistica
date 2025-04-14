@@ -1,10 +1,12 @@
 import request from 'supertest';
-import app from '../src/app';  // Asegúrate de que esta importación apunte al archivo correcto
+import app from '../src/app';
+import { pool } from '../src/config/db';
+
 
 describe('POST /usuarios/login', () => {
   it('should return 400 if email or password is missing', async () => {
     const response = await request(app)
-      .post('/usuarios/login')  // Usa /usuarios/login, no solo /login
+      .post('/usuarios/login')  
       .send({ email: '', password: '' });
 
     expect(response.status).toBe(400);
@@ -13,7 +15,7 @@ describe('POST /usuarios/login', () => {
 
   it('should return 400 if user does not exist', async () => {
     const response = await request(app)
-      .post('/usuarios/login')  // Usa /usuarios/login, no solo /login
+      .post('/usuarios/login')  
       .send({ email: 'notfound@example.com', password: 'password' });
 
     expect(response.status).toBe(400);
@@ -22,7 +24,7 @@ describe('POST /usuarios/login', () => {
 
   it('should return 400 if password is incorrect', async () => {
     const response = await request(app)
-      .post('/usuarios/login')  // Usa /usuarios/login, no solo /login
+      .post('/usuarios/login') 
       .send({ email: 'santiago@example.com', password: 'wrongpassword' });
 
     expect(response.status).toBe(400);
@@ -31,11 +33,17 @@ describe('POST /usuarios/login', () => {
 
   it('should return 200 and token if login is successful', async () => {
     const response = await request(app)
-      .post('/usuarios/login')  // Usa /usuarios/login, no solo /login
-      .send({ email: 'santiago@example.com', password: 'correctpassword' });
+      .post('/usuarios/login')  
+      .send({ email: 'santiago@example.com', password: '123456' });
 
     expect(response.status).toBe(200);
     expect(response.body.message).toBe('Login exitoso');
-    expect(response.body.token).toBeDefined();  // Asegurarse de que el token esté presente
+    expect(response.body.token).toBeDefined();  
   });
+
+  afterAll(async () => {
+    await pool.end(); // cerrar la bd
+  });
+  
 });
+
