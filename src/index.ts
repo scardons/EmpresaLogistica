@@ -1,23 +1,22 @@
-import express from 'express';
-import { pool } from './config/db';
-import usuarioRoutes from './routes/usuario.routes';
+import app from './app';
+import dotenv from 'dotenv';
+import redisClient from './utils/redisClient';
 
-const app = express();
-const PORT = 3000;
+dotenv.config();
 
-app.use(express.json());
-app.use('/usuarios', usuarioRoutes);
+const PORT = process.env.PORT || 3000;
 
-
-app.get('/', async (req, res) => {
+async function startServer() {
   try {
-    const [rows] = await pool.query('SELECT 1+1 AS resultado');
-    res.json(rows);
-  } catch (error) {
-    res.status(500).json({ message: 'Error en la conexion bd' });
-  }
-});
+    await redisClient.connect();
+    console.log('✅ Conectado a Redis');
 
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error('❌ Error al conectar con Redis:', error);
+  }
+}
+
+startServer();

@@ -9,7 +9,13 @@ export async function crearUsuario(nombre:string, email:string, password:string,
     return result
 }
 
-export async function obtenerUsuarioPorEmail(email: string): Promise<any>{
-    const[rows]: any = await pool.query('SELECT * FROM usuarios WHERE email = ?', [email])
-    return rows[0]
-}
+// export async function obtenerUsuarioPorEmail(email: string): Promise<any>{
+//     const[rows]: any = await pool.query('SELECT * FROM usuarios WHERE email = ?', [email])
+//     return rows[0]
+// }
+
+export async function obtenerUsuarioPorEmail(email: string) {
+    const [rows]: any = await pool.query('SELECT * FROM usuarios WHERE email = ?', [email]);
+    return rows[0];
+  }
+  

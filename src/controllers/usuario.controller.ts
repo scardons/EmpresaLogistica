@@ -31,34 +31,35 @@ export async function registrar(req: Request, res: Response): Promise<any> {
 
 
 
-export async function login(req: Request, res: Response): Promise<any>{
-  const { email, password} = req.body
+export async function login(req: Request, res: Response): Promise<any> {
+  const { email, password } = req.body;
 
-  if (!email || !password){
-    return res.status(400).json({message: 'Email y contraseña son obligatorios'})
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email y contraseña son obligatorios' });
   }
 
-  try{
-    const usuario = await obtenerUsuarioPorEmail(email)
+  try {
+    const usuario = await obtenerUsuarioPorEmail(email);
 
-    if (!usuario){
-      return res.status(400).json({message: 'Usuario no encontrado'})
+    if (!usuario) {
+      return res.status(400).json({ message: 'Usuario no encontrado' });
     }
 
-    const passwordValido = await bcrypt.compare(password, usuario.password)
+    const passwordValido = await bcrypt.compare(password, usuario.password);
 
-    if (!passwordValido){
-      return res.status(400).json({message: 'Contraseña incorrecta'})
+    if (!passwordValido) {
+      return res.status(400).json({ message: 'Contraseña incorrecta' });
     }
 
     const token = jwt.sign(
-      { id: usuario.id, nombre: usuario.nombre, email: usuario.email},
-      process.env.JWT_SECRET as string, // usamos el secreto del .env
-      {expiresIn: '1h'}
-    )
+      { id: usuario.id, nombre: usuario.nombre, email: usuario.email },
+      process.env.JWT_SECRET as string,
+      { expiresIn: '1h' }
+    );
 
-    return res.status(200).json({message: 'Login exitoso', token})
-  } catch (error){
+    return res.status(200).json({ message: 'Login exitoso', token });
+  } catch (error) {
+    console.error('Error en login:', error); // <--- agrega este log
     return res.status(500).json({ message: 'Error al iniciar sesión', error });
   }
 }

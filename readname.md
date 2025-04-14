@@ -15,3 +15,7 @@ luego npm init -y para crear el package.json
 * creamos el controlador usuario
 * creamos en login en el conrolador, modelo, router con .env y token 
 * npm install dotenv
+*creamos el perfil en el controlador con el middleware router
+* instale docker luego lo configure con redis
+* se creo en la carpeta utils redisCliente y se organizo el index.ts
+* Para crear pruebas unitarias instalamos jest y pusimos una carpeta de test en la parte de afuera de src para mantener separado las pruebas del codigo de produccion
