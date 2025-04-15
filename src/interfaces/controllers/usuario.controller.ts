@@ -1,14 +1,14 @@
 import { Request, Response } from 'express';
-import { crearUsuario } from '../models/usuarioModel';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken'
-import {obtenerUsuarioPorEmail} from '../models/usuarioModel'
-import dotenv from 'dotenv';
-import { AuthRequest } from '../middlewares/authMiddleware';
-import { promises } from 'dns';
+import { RegistrarUsuario } from '../../domain/use-cases/registrarUsuario';
+import { LoginUsuario } from '../../domain/use-cases/loginUsuario';
+import { UsuarioRepository } from '../../infrastructure/repositories/usuario.repository.mysql';
+import { AuthRequest } from '../../interfaces/middlewares/authMiddleware';
 
-dotenv.config();
 
+const usuarioRepository = new UsuarioRepository();
+
+const registrarUsuarioUseCase = new RegistrarUsuario(usuarioRepository);
+const loginUsuarioUseCase = new LoginUsuario(usuarioRepository);
 
 export async function registrar(req: Request, res: Response): Promise<any> {
   const { nombre, email, password } = req.body;
@@ -18,17 +18,12 @@ export async function registrar(req: Request, res: Response): Promise<any> {
   }
 
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    await crearUsuario(nombre, email, hashedPassword);
-
+    await registrarUsuarioUseCase.execute(nombre, email, password);
     return res.status(201).json({ message: 'Usuario registrado correctamente' });
   } catch (error) {
     return res.status(500).json({ message: 'Error al registrar el usuario', error });
   }
 }
-
-
 
 
 export async function login(req: Request, res: Response): Promise<any> {
@@ -39,28 +34,12 @@ export async function login(req: Request, res: Response): Promise<any> {
   }
 
   try {
-    const usuario = await obtenerUsuarioPorEmail(email);
-
-    if (!usuario) {
-      return res.status(400).json({ message: 'Usuario no encontrado' });
-    }
-
-    const passwordValido = await bcrypt.compare(password, usuario.password);
-
-    if (!passwordValido) {
-      return res.status(400).json({ message: 'Contraseña incorrecta' });
-    }
-
-    const token = jwt.sign(
-      { id: usuario.id, nombre: usuario.nombre, email: usuario.email },
-      process.env.JWT_SECRET as string,
-      { expiresIn: '1h' }
-    );
-
+    console.log('Intentando loguear al usuario con email:', email);
+    const token = await loginUsuarioUseCase.execute(email, password);
     return res.status(200).json({ message: 'Login exitoso', token });
-  } catch (error) {
-    console.error('Error en login:', error); // <--- agrega este log
-    return res.status(500).json({ message: 'Error al iniciar sesión', error });
+  } catch (error: any) {
+    // console.error('Error al loguearse:', error.message);  // Para ver el mensaje de error
+    return res.status(400).json({ message: error.message });
   }
 }
 
@@ -69,7 +48,6 @@ export async function login(req: Request, res: Response): Promise<any> {
 
 export async function perfil(req: AuthRequest, res: Response): Promise<void> {
   try {
-    // req.user viene del middleware verifyToken
     if (!req.user) {
       res.status(401).json({ message: 'No autorizado' });
       return;

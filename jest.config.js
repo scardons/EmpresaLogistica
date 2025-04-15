@@ -1,5 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'node',
-  testMatch: ['<rootDir>/tests/**/*.test.ts'], // Especifica que busque archivos .test.ts
+  testMatch: ['<rootDir>/tests/**/*.test.ts'],
+  setupFiles: ['<rootDir>/jest.setup.ts'], // 💡 Línea que carga las variables .env
 };

@@ -1,6 +1,6 @@
 import app from './app';
 import dotenv from 'dotenv';
-import redisClient from './utils/redisClient';
+import redisClient from './shared/redisClient';
 
 dotenv.config();
 

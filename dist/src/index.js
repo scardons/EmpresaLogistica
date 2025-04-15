@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const redisClient_1 = __importDefault(require("./utils/redisClient"));
+const redisClient_1 = __importDefault(require("./shared/redisClient"));
 dotenv_1.default.config();
 const PORT = process.env.PORT || 3000;
 async function startServer() {

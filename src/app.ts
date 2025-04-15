@@ -1,6 +1,6 @@
 import express from 'express';
-import usuarioRoutes from './routes/usuario.routes';
-import redisClient from './utils/redisClient';
+import usuarioRoutes from './interfaces/routes/usuario.routes';
+import redisClient from './shared/redisClient';
 import { pool } from './config/db';
 
 const app = express();
