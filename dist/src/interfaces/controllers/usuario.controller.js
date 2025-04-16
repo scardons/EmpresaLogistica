@@ -28,7 +28,6 @@ async function login(req, res) {
         return res.status(400).json({ message: 'Email y contraseña son obligatorios' });
     }
     try {
-        console.log('Intentando loguear al usuario con email:', email);
         const token = await loginUsuarioUseCase.execute(email, password);
         return res.status(200).json({ message: 'Login exitoso', token });
     }

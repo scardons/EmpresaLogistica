@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "env.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

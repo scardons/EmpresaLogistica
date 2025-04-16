@@ -34,7 +34,6 @@ export async function login(req: Request, res: Response): Promise<any> {
   }
 
   try {
-    console.log('Intentando loguear al usuario con email:', email);
     const token = await loginUsuarioUseCase.execute(email, password);
     return res.status(200).json({ message: 'Login exitoso', token });
   } catch (error: any) {

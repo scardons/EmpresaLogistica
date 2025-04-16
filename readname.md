@@ -21,3 +21,6 @@ luego npm init -y para crear el package.json
 * Para crear pruebas unitarias instalamos jest y pusimos una carpeta de test en la parte de afuera de src para mantener separado las pruebas del codigo de produccion
 * Realizamos test de login y de register y sale todo OK
 * pasamos de mvc a clean architecture luego testeamos
+* http://localhost:3000/api-docs para la documentacion swagger
+* creamos la siguiente funcion de envios 
+* validamos que si existe a direccion con la api en console cloud y debia ingresar mi tarjeta - se crea application direccion y validacion 
