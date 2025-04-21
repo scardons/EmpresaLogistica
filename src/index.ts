@@ -1,6 +1,6 @@
 import app from './app';
 import dotenv from 'dotenv';
-import redisClient from './shared/redisClient';
+import { connectRedis } from './shared/redisClient';
 
 dotenv.config();
 
@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 async function startServer() {
   try {
-    await redisClient.connect();
+    await connectRedis();
     console.log('✅ Conectado a Redis');
 
     app.listen(PORT, () => {

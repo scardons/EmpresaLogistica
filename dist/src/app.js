@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usuario_routes_1 = __importDefault(require("./interfaces/routes/usuario.routes"));
-const redisClient_1 = __importDefault(require("./shared/redisClient"));
+const redisClient_1 = require("./shared/redisClient");
 const db_1 = require("./config/db");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_1 = require("./config/swagger");
@@ -28,8 +28,9 @@ app.get('/', async (req, res) => {
 // Ruta de prueba para Redis
 app.get('/cache-test', async (req, res) => {
     try {
-        await redisClient_1.default.set('mensaje', 'Hola desde Redis');
-        const valor = await redisClient_1.default.get('mensaje');
+        await (0, redisClient_1.ensureRedisConnection)(); // <--- asegúrate antes de usar
+        await redisClient_1.redisClient.set('mensaje', 'Hola desde Redis');
+        const valor = await redisClient_1.redisClient.get('mensaje');
         res.json({
             message: 'Prueba de Redis exitosa',
             valorGuardado: valor,

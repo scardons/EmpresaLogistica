@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../src/app"));
 const db_1 = require("../src/config/db");
+const redisClient_1 = require("../src/shared/redisClient");
 describe('POST /usuarios/registrar', () => {
     // Limpieza de base de datos antes de cada test
     beforeEach(async () => {
@@ -39,6 +40,9 @@ describe('POST /usuarios/registrar', () => {
         expect(res.body.error).toBeDefined();
     });
     afterAll(async () => {
-        await db_1.pool.end();
+        if (redisClient_1.redisClient.isOpen) {
+            await redisClient_1.redisClient.quit(); // cierra Redis si está abierto
+        }
+        await db_1.pool.end(); // cierra MySQL
     });
 });

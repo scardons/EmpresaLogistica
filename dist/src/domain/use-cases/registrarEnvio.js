@@ -13,6 +13,7 @@ class RegistrarEnvio {
         }
         const nuevoEnvio = {
             ...envio,
+            estado: 'En espera', // ✅ Estado inicial automático
             fechaRegistro: new Date(),
         };
         return this.envioRepository.registrar(nuevoEnvio);

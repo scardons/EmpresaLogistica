@@ -8,7 +8,7 @@ export class RegistrarEnvio {
     private direccionValidator: IDireccionValidator
   ) {}
 
-  async execute(envio: Omit<Envio, 'id' | 'fechaRegistro'>): Promise<Envio> {
+  async execute(envio: Omit<Envio, 'id' | 'fechaRegistro' | 'estado'>): Promise<Envio> {
     const esValida = await this.direccionValidator.esDireccionValida(envio.direccion);
 
     if (!esValida) {
@@ -17,6 +17,7 @@ export class RegistrarEnvio {
 
     const nuevoEnvio: Envio = {
       ...envio,
+      estado: 'En espera', // ✅ Estado inicial automático
       fechaRegistro: new Date(),
     };
 

@@ -1,9 +1,16 @@
 import request from 'supertest';
-import app from '../src/app'; // Asegúrate de exportar app desde app.ts
+import app from '../src/app'; 
 import { pool } from '../src/config/db';
+import { redisClient } from '../src/shared/redisClient';
 
 describe('POST /envios/registrar', () => {
   afterAll(async () => {
+    // Cerrar la conexión de Redis si está abierta
+    if (redisClient.isOpen) {
+      await redisClient.quit();
+    }
+
+    // Cerrar la conexión de MySQL
     await pool.end();
   });
 

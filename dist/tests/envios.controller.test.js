@@ -4,10 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
-const app_1 = __importDefault(require("../src/app")); // Asegúrate de exportar app desde app.ts
+const app_1 = __importDefault(require("../src/app"));
 const db_1 = require("../src/config/db");
+const redisClient_1 = require("../src/shared/redisClient");
 describe('POST /envios/registrar', () => {
     afterAll(async () => {
+        // Cerrar la conexión de Redis si está abierta
+        if (redisClient_1.redisClient.isOpen) {
+            await redisClient_1.redisClient.quit();
+        }
+        // Cerrar la conexión de MySQL
         await db_1.pool.end();
     });
     it('debería registrar un nuevo envío y devolverlo con ID y fecha', async () => {

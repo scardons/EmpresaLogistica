@@ -6,19 +6,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.DireccionValidator = void 0;
 const axios_1 = __importDefault(require("axios"));
 const env_1 = require("../../config/env");
+const redisClient_1 = require("../../shared/redisClient");
 class DireccionValidator {
     async esDireccionValida(direccion) {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${env_1.config.GOOGLE_API_KEY}`;
-        console.log("URL generada:", url); // Aquí puedes ver la URL completa
+        const cacheKey = `direccion:${direccion.toLowerCase()}`;
         try {
+            await (0, redisClient_1.ensureRedisConnection)(); // <--- asegúrate aquí también
+            const cached = await redisClient_1.redisClient.get(cacheKey);
+            if (cached !== null) {
+                return cached === 'true';
+            }
+            // 2. Consultar la API de Google si no está en caché
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(direccion)}&key=${env_1.config.GOOGLE_API_KEY}`;
             const response = await axios_1.default.get(url);
-            // Loguea la respuesta completa para que puedas inspeccionarla
-            console.log("Respuesta completa de Google Maps API:", response.data);
-            // Verifica que la respuesta tenga estado 'OK' y que existan resultados
-            return response.data.status === 'OK' && response.data.results.length > 0;
+            const esValida = response.data.status === 'OK' && response.data.results.length > 0;
+            // 3. Guardar el resultado en Redis por 24h
+            await redisClient_1.redisClient.set(cacheKey, esValida.toString(), { EX: 86400 });
+            return esValida;
         }
         catch (error) {
-            console.error("Error al llamar a la API de Google Maps:", error);
+            console.error("❌ Error al validar la dirección:", error);
             return false;
         }
     }

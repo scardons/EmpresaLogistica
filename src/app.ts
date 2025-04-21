@@ -1,6 +1,6 @@
 import express from 'express';
 import usuarioRoutes from './interfaces/routes/usuario.routes';
-import redisClient from './shared/redisClient';
+import { ensureRedisConnection, redisClient } from './shared/redisClient';
 import { pool } from './config/db';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
@@ -29,6 +29,7 @@ app.get('/', async (req, res) => {
 // Ruta de prueba para Redis
 app.get('/cache-test', async (req, res) => {
   try {
+    await ensureRedisConnection(); // <--- asegúrate antes de usar
     await redisClient.set('mensaje', 'Hola desde Redis');
     const valor = await redisClient.get('mensaje');
     res.json({

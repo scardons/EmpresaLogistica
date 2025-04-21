@@ -1,9 +1,9 @@
 import request from 'supertest';
 import app from '../src/app';
-import { pool } from '../src/config/db'
+import { pool } from '../src/config/db';
+import { redisClient } from '../src/shared/redisClient';
 
 describe('POST /usuarios/registrar', () => {
-
   // Limpieza de base de datos antes de cada test
   beforeEach(async () => {
     await pool.query(`DELETE FROM usuarios WHERE email = 'nuevo@example.com'`);
@@ -44,6 +44,9 @@ describe('POST /usuarios/registrar', () => {
   });
 
   afterAll(async () => {
-    await pool.end();
+    if (redisClient.isOpen) {
+      await redisClient.quit();  // cierra Redis si está abierto
+    }
+    await pool.end(); // cierra MySQL
   });
 });
