@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { registrarEnvio } from '../controllers/envio.controller';
+import { asignarRutaHandler, registrarEnvio } from '../controllers/envio.controller';
 
 const router = Router();
 /**
@@ -71,5 +71,56 @@ const router = Router();
  */
 
 router.post('/registrar', registrarEnvio);
+
+/**
+ * @swagger
+ * /envios/asignar-ruta:
+ *   post:
+ *     summary: Asignar una ruta a un envío
+ *     tags: [Envíos]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - envioId
+ *               - rutaId
+ *               - transportistaId
+ *             properties:
+ *               envioId:
+ *                 type: integer
+ *                 example: 1
+ *               rutaId:
+ *                 type: integer
+ *                 example: 101
+ *               transportistaId:
+ *                 type: integer
+ *                 example: 202
+ *     responses:
+ *       200:
+ *         description: Ruta asignada correctamente
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mensaje:
+ *                   type: string
+ *                   example: Ruta asignada correctamente
+ *       500:
+ *         description: Error al asignar ruta
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Error al asignar ruta
+ */
+
+router.post('/asignar-ruta', asignarRutaHandler);
 
 export default router;
