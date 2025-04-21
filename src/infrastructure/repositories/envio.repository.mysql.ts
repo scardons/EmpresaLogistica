@@ -1,33 +1,39 @@
+// src/infrastructure/repositories/envio.repository.mysql.ts
+import { pool } from "../../config/db"; // Importa el pool de conexiones
 import { IEnvioRepository } from "../../domain/repositories/envio.repository";
-import { Envio } from "../../domain/entities/envio.entity";
-import { pool } from "../../config/db";
+import { ResultSetHeader } from 'mysql2'; // Asegúrate de importar este tipo
+
 
 export class EnvioRepositoryMysql implements IEnvioRepository {
-  async registrar(envio: Envio): Promise<Envio> {
-    const [result]: any = await pool.query(
-      `INSERT INTO envios (destinatario, direccion, peso, dimensiones, tipoProducto, fechaRegistro)
-       VALUES (?, ?, ?, ?, ?, ?)`,
-      [
-        envio.destinatario,
-        envio.direccion,
-        envio.peso,
-        envio.dimensiones,
-        envio.tipoProducto,
-        envio.fechaRegistro,
-      ]
-    );
+  // Implementación del método registrar
+  async registrar(envio: any): Promise<any> {
+    const [result] = await pool.execute('INSERT INTO envios SET ?', [envio]);
+    return result; // Devuelve el resultado de la inserción (por ejemplo, el ID insertado)
+  }
 
-    return {
-      ...envio,
-      id: result.insertId,
-    };
+  // Implementación de getEnvioById
+  async getEnvioById(id: number): Promise<any> {
+    const [rows] = await pool.execute('SELECT * FROM envios WHERE id = ?', [id]);
+    return (rows as any[]).length > 0 ? (rows as any[])[0] : null; // Asegúrate de tratar `rows` como un array
+  }
+
+  // Implementación de getRutaById
+  async getRutaById(id: number): Promise<any> {
+    const [rows] = await pool.execute('SELECT * FROM rutas WHERE id = ?', [id]);
+    return (rows as any[]).length > 0 ? (rows as any[])[0] : null; // Asegúrate de tratar `rows` como un array
+  }
+
+  // Implementación de getTransportistaById
+  async getTransportistaById(id: number): Promise<any> {
+    const [rows] = await pool.execute('SELECT * FROM transportistas WHERE id = ?', [id]);
+    return (rows as any[]).length > 0 ? (rows as any[])[0] : null; // Asegúrate de tratar `rows` como un array
   }
 
   async asignarRuta(envioId: number, rutaId: number, transportistaId: number): Promise<void> {
-    await pool.query(
-      `INSERT INTO asignaciones (envio_id, ruta_id, transportista_id)
-       VALUES (?, ?, ?)`,
-      [envioId, rutaId, transportistaId]
-    );
+    const [result] = await pool.execute<ResultSetHeader>('UPDATE envios SET rutaId = ?, transportistaId = ? WHERE id = ?', [rutaId, transportistaId, envioId]);
+  
+    if (result.affectedRows === 0) {
+      throw new Error(`No se pudo actualizar el envío con ID ${envioId}`);
+    }
   }
 }

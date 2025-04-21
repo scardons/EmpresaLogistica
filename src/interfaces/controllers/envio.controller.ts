@@ -1,18 +1,18 @@
+// src/interfaces/controllers/envio.controller.ts
 import { Request, Response } from 'express';
-import { RegistrarEnvio } from '../../domain/use-cases/registrarEnvio';
 import { EnvioRepositoryMysql } from '../../infrastructure/repositories/envio.repository.mysql';
+import { RegistrarEnvio } from '../../domain/use-cases/registrarEnvio';
+import { AsignarRutaUseCase } from '../../domain/use-cases/asignarRutaEnvio';
 import { DireccionValidator } from '../../infrastructure/services/direccionValidator';
-import { AsignarRutaUseCase } from '../../domain/use-cases/asignarRutaEnvio'; 
-import { promises } from 'dns';
 
 const envioRepository = new EnvioRepositoryMysql();
 const direccionValidator = new DireccionValidator();
 
+// Casos de uso
 const registrarEnvioUseCase = new RegistrarEnvio(envioRepository, direccionValidator);
-
-// 🔥 INSTANCIA DEL CASO DE USO PARA ASIGNAR RUTA
 const asignarRutaUseCase = new AsignarRutaUseCase(envioRepository);
 
+// Controlador para registrar envío
 export const registrarEnvio = async (req: Request, res: Response) => {
   try {
     const { destinatario, direccion, peso, dimensiones, tipoProducto } = req.body;
@@ -31,16 +31,18 @@ export const registrarEnvio = async (req: Request, res: Response) => {
   }
 };
 
-// En envio.controller.ts
+// Controlador para asignar ruta
 export const asignarRutaHandler = async (req: Request, res: Response): Promise<any> => {
   const { envioId, rutaId, transportistaId } = req.body;
 
   try {
     await asignarRutaUseCase.execute(envioId, rutaId, transportistaId);
     return res.status(200).json({ mensaje: 'Ruta asignada correctamente' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Error al asignar ruta' });
+  } catch (error: any) {
+    console.error("Error al asignar ruta:", error);
+    return res.status(500).json({
+      error: 'Error al asignar ruta',
+      details: error.message || 'Error desconocido'
+    });
   }
 };
-
