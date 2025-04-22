@@ -24,3 +24,11 @@ luego npm init -y para crear el package.json
 * http://localhost:3000/api-docs para la documentacion swagger
 * creamos la siguiente funcion de envios 
 * validamos que si existe a direccion con la api en console cloud y debia ingresar mi tarjeta - se crea application direccion y validacion 
+* Resumen de lo que se cambió:
+Repositorio: Se agregó la capacidad al registro del transportista y se verificó si ya existe un transportista con la misma placa.
+
+Controlador: Ahora valida que los campos estén presentes y que la capacidad sea un valor válido.
+
+Rutas: Se actualizó la ruta para aceptar la capacidad del vehículo.
+
+Pruebas: Se agregaron casos de prueba para verificar que la validación y el registro funcionan correctamente.

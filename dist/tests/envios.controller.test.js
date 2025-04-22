@@ -21,16 +21,24 @@ describe('POST /envios/registrar', () => {
             destinatario: 'Carlos Pérez',
             direccion: 'Carrera 15 #20-50, Bogotá',
             peso: 2.5,
-            dimensiones: '30x20x10',
+            dimensiones: {
+                alto: 30,
+                ancho: 20,
+                largo: 10
+            },
             tipoProducto: 'Electrónica'
         };
         const res = await (0, supertest_1.default)(app_1.default)
             .post('/envios/registrar')
-            .send(envio)
-            .expect(201);
+            .send(envio);
+        // ✅ MOSTRAR EL CUERPO DE LA RESPUESTA
+        expect(res.status).toBe(201);
         expect(res.body).toHaveProperty('id');
         expect(res.body).toHaveProperty('fechaRegistro');
         expect(res.body.destinatario).toBe(envio.destinatario);
         expect(res.body.direccion).toBe(envio.direccion);
+        expect(res.body.peso).toBe(envio.peso);
+        expect(res.body.dimensiones).toBe(JSON.stringify(envio.dimensiones)); // Verifica que las dimensiones sean serializadas correctamente
+        expect(res.body.tipoProducto).toBe(envio.tipoProducto);
     });
 });

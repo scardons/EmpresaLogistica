@@ -5,6 +5,7 @@ import { pool } from './config/db';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
 import envioRoutes from './interfaces/routes/envio.routes';
+import transportistaRoutes from "./interfaces/routes/transportista.routes";
 
 
 
@@ -14,6 +15,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(express.json());
 app.use('/usuarios', usuarioRoutes);
 app.use('/envios', envioRoutes);
+app.use("/transportistas", transportistaRoutes);
+
 
 
 // Ruta para verificar conexión a MySQL

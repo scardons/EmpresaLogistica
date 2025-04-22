@@ -10,11 +10,13 @@ const db_1 = require("./config/db");
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const swagger_1 = require("./config/swagger");
 const envio_routes_1 = __importDefault(require("./interfaces/routes/envio.routes"));
+const transportista_routes_1 = __importDefault(require("./interfaces/routes/transportista.routes"));
 const app = (0, express_1.default)();
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
 app.use(express_1.default.json());
 app.use('/usuarios', usuario_routes_1.default);
 app.use('/envios', envio_routes_1.default);
+app.use("/transportistas", transportista_routes_1.default);
 // Ruta para verificar conexión a MySQL
 app.get('/', async (req, res) => {
     try {
