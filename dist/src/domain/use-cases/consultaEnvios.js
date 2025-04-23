@@ -16,7 +16,6 @@ class ConsultaEnvios {
         const cachedData = await redisClient_1.redisClient.get(cacheKey);
         if (cachedData) {
             // Si los datos están en caché, los devolvemos directamente
-            console.log('Datos obtenidos desde el cache');
             return JSON.parse(cachedData);
         }
         // Si no están en caché, realizamos la consulta a la base de datos
@@ -28,7 +27,6 @@ class ConsultaEnvios {
         const result = { envios, total };
         // Almacenamos los resultados en caché para futuras consultas
         await redisClient_1.redisClient.set(cacheKey, JSON.stringify(result), { EX: 3600 }); // Cache por 1 hora
-        console.log('Datos obtenidos desde la base de datos y guardados en cache');
         return result;
     }
 }

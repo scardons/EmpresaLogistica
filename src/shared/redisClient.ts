@@ -12,6 +12,7 @@ const connectRedis = async () => {
       await redisClient.connect();
     }
   } catch (err) {
+    throw new Error('No se pudo conectar a Redis');
   }
 };
 
@@ -25,5 +26,22 @@ const ensureRedisConnection = async () => {
     await connectRedis();
   }
 };
+
+// Función de prueba para asegurarse de que la conexión a Redis está funcionando
+const testRedisConnection = async () => {
+  try {
+    await redisClient.set('testKey', 'Hello Redis!');
+    const value = await redisClient.get('testKey');
+  } catch (error) {
+  }
+};
+
+// Llamar a la función de prueba para verificar la conexión
+const testConnection = async () => {
+  await ensureRedisConnection();  // Asegurarse de que está conectado
+  await testRedisConnection();    // Ejecutar la prueba de conexión
+};
+
+testConnection();
 
 export { redisClient, connectRedis, ensureRedisConnection };

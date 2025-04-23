@@ -9,7 +9,6 @@ import envioRoutes from './interfaces/routes/envio.routes';
 import transportistaRoutes from "./interfaces/routes/transportista.routes";
 import envioEstadoRoutes from './interfaces/routes/envioEstado.routes';
 import filtrosRoutes from './interfaces/routes/filtros.routes';
-console.log('📁 Rutas cargadas: /usuarios, /envios, /transportistas, /envio, /api/envios/filtros');
 
 const app = express();
 
@@ -25,7 +24,6 @@ app.use('/envios', envioRoutes);
 app.use("/transportistas", transportistaRoutes);
 app.use("/envio", envioEstadoRoutes);
 app.use('/api/envios', filtrosRoutes);  // Ruta de filtros
-console.log("Rutas cargadas: /api/envios/filtros");
 
 
 // Ruta para verificar conexión a MySQL

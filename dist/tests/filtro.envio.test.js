@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const app_1 = __importDefault(require("../src/app"));
+const redisClient_1 = require("../src/shared/redisClient");
 describe('GET /api/envios/filtros - Consulta avanzada de envíos', () => {
     it('debe devolver envíos filtrados por rango de fechas, estado y transportistaId', async () => {
         const response = await (0, supertest_1.default)(app_1.default).get('/api/envios/filtros')
@@ -14,7 +15,6 @@ describe('GET /api/envios/filtros - Consulta avanzada de envíos', () => {
             estado: 'Entregado',
             transportistaId: 1
         });
-        console.log('🧪 Respuesta test 1:', response.status, response.body);
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body.envios)).toBe(true);
     });
@@ -26,7 +26,6 @@ describe('GET /api/envios/filtros - Consulta avanzada de envíos', () => {
             estado: 'Inexistente',
             transportistaId: 999
         });
-        console.log('🧪 Respuesta test 2:', response.status, response.body);
         expect(response.status).toBe(200);
         expect(Array.isArray(response.body.envios)).toBe(true);
         expect(response.body.envios.length).toBe(0);
@@ -34,10 +33,14 @@ describe('GET /api/envios/filtros - Consulta avanzada de envíos', () => {
     it('debe manejar errores si los parámetros son inválidos', async () => {
         const response = await (0, supertest_1.default)(app_1.default).get('/api/envios/filtros')
             .query({
-            fechaInicio: 'fecha-mala'
+            fechaInicio: 'fecha-mala' // Parámetro inválido
         });
-        console.log('🧪 Respuesta test 3:', response.status, response.body);
-        expect(response.status).toBeGreaterThanOrEqual(400);
-        expect(response.body).toHaveProperty('error');
+        expect(response.status).toBeGreaterThanOrEqual(400); // Asegura que el status sea >= 400
+        expect(response.body).toHaveProperty('error'); // Asegura que haya un mensaje de error
+        expect(response.body.error).toBe('Parámetro "fechaInicio" inválido'); // Verifica el mensaje de error
+    });
+    afterAll(async () => {
+        // Cierra la conexión de Redis
+        await redisClient_1.redisClient.quit();
     });
 });

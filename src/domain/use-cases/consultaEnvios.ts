@@ -21,7 +21,6 @@ export class ConsultaEnvios {
 
     if (cachedData) {
       // Si los datos están en caché, los devolvemos directamente
-      console.log('Datos obtenidos desde el cache');
       return JSON.parse(cachedData);
     }
 
@@ -48,7 +47,6 @@ export class ConsultaEnvios {
     // Almacenamos los resultados en caché para futuras consultas
     await redisClient.set(cacheKey, JSON.stringify(result), { EX: 3600 });  // Cache por 1 hora
 
-    console.log('Datos obtenidos desde la base de datos y guardados en cache');
     return result;
   }
 }
