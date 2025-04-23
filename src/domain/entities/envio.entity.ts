@@ -1,3 +1,4 @@
+//src/domain/entities/envio.entity.ts
 export interface Envio {
     id?: number;
     destinatario: string;
@@ -6,6 +7,8 @@ export interface Envio {
     dimensiones: string;
     tipoProducto: string;
     fechaRegistro: Date;     
-    estado: string;          
+    estado: string;
+    transportista: string
+    fechaEntrega: Date         
   }
   

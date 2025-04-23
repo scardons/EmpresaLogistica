@@ -32,3 +32,4 @@ Controlador: Ahora valida que los campos estén presentes y que la capacidad sea
 Rutas: Se actualizó la ruta para aceptar la capacidad del vehículo.
 
 Pruebas: Se agregaron casos de prueba para verificar que la validación y el registro funcionan correctamente.
+* Uso de Redis para almacenar estados recientes y optimizar la consulta.

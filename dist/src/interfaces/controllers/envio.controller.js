@@ -13,13 +13,15 @@ const asignarRutaUseCase = new asignarRutaEnvio_1.AsignarRutaUseCase(envioReposi
 // Controlador para registrar envío
 const registrarEnvio = async (req, res) => {
     try {
-        const { destinatario, direccion, peso, dimensiones, tipoProducto } = req.body;
+        const { destinatario, direccion, peso, dimensiones, tipoProducto, transportista, fechaEntrega } = req.body;
         const envio = await registrarEnvioUseCase.execute({
             destinatario,
             direccion,
             peso,
             dimensiones,
             tipoProducto,
+            transportista,
+            fechaEntrega,
         });
         res.status(201).json(envio);
     }
