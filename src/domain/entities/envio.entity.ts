@@ -9,6 +9,7 @@ export interface Envio {
     fechaRegistro: Date;     
     estado: string;
     transportista: string
-    fechaEntrega: Date         
+    fechaEntrega?: Date
+    tiempoEntrega?: number | null         
   }
   
