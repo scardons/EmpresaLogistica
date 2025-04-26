@@ -14,7 +14,14 @@ const envio_routes_1 = __importDefault(require("./interfaces/routes/envio.routes
 const transportista_routes_1 = __importDefault(require("./interfaces/routes/transportista.routes"));
 const envioEstado_routes_1 = __importDefault(require("./interfaces/routes/envioEstado.routes"));
 const filtros_routes_1 = __importDefault(require("./interfaces/routes/filtros.routes"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+// Configuración de CORS
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:3000', // Permite solicitudes solo desde tu frontend (ajústalo si tu frontend está en otro puerto/dominio)
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
+    allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+}));
 // Documentación Swagger
 app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(swagger_1.swaggerSpec));
 // Middleware para manejar JSON

@@ -1,5 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { registrarUsuario } from './services/authService';
+import { useNavigate } from 'react-router-dom';
 
 interface RegistroFormData {
   nombre: string;
@@ -15,12 +16,19 @@ export default function RegisterForm() {
     reset,
   } = useForm<RegistroFormData>();
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: RegistroFormData) => {
-    await registrarUsuario(data);
-    alert('Usuario registrado exitosamente');
-    reset();
+    try {
+      await registrarUsuario(data);
+      alert('Usuario registrado exitosamente');
+      reset();
+      navigate('/login'); // Redirige si quieres después del registro
+    } catch (error) {
+      alert('Hubo un error al registrar el usuario');
+      console.error('Error en el registro:', error);
+    }
   };
-  
 
   return (
     <form
@@ -29,7 +37,6 @@ export default function RegisterForm() {
     >
       <h2 className="text-center mb-4 text-gray-800 font-sans text-xl">Registro</h2>
 
-      {/* Campo de Nombre */}
       <input
         {...register('nombre', { required: 'Nombre requerido' })}
         placeholder="Nombre"
@@ -37,7 +44,6 @@ export default function RegisterForm() {
       />
       {errors.nombre && <p className="text-red-500 text-sm">{errors.nombre.message}</p>}
 
-      {/* Campo de Email */}
       <input
         {...register('email', { required: 'Email requerido' })}
         placeholder="Email"
@@ -46,7 +52,6 @@ export default function RegisterForm() {
       />
       {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
-      {/* Campo de Contraseña */}
       <input
         type="password"
         {...register('password', { required: 'Contraseña requerida' })}
@@ -55,12 +60,20 @@ export default function RegisterForm() {
       />
       {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
-      {/* Botón de Enviar */}
       <button
         type="submit"
         className="p-3 bg-blue-500 text-white rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-blue-700"
       >
         Registrarse
+      </button>
+
+      {/* Botón Volver */}
+      <button
+        type="button"
+        onClick={() => navigate('/')}
+        className="p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-gray-400"
+      >
+        Volver
       </button>
     </form>
   );

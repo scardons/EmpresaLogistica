@@ -6,17 +6,19 @@ export class TransportistaRepositoryMysql {
     nombre: string;
     placa: string;
     telefono: string;
+    capacidad: number
   }): Promise<any> {
     const fechaRegistro = new Date().toISOString();
 
     const query = `
-      INSERT INTO transportistas (nombre, placa, telefono, fecha_registro)
-      VALUES (?, ?, ?, ?)
+      INSERT INTO transportistas (nombre, placa, telefono, capacidad, fecha_registro)
+      VALUES (?, ?, ?, ?, ?)
     `;
     const values = [
       transportista.nombre,
       transportista.placa,
       transportista.telefono,
+      transportista.capacidad,
       fechaRegistro,
     ];
 
@@ -41,7 +43,7 @@ async verificarDisponibilidadTransportista(transportistaId: number): Promise<boo
   }
 
   async verificarCapacidadVehiculo(transportistaId: number, pesoEnvio: number): Promise<boolean>{
-    const query = `SELECT capacidad FROM transportista WHERE id = ?`
+    const query = `SELECT capacidad FROM transportistas WHERE id = ?`
     //ejecutar la consulta
     const [rows] = await pool.execute(query, [transportistaId])
     //obtenemos la capacidad del vehiculo

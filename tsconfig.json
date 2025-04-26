@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src", "tests", "env.d.ts"],
+  "include": ["src", "tests", "env.d.ts", "frontend/src/services/api.ts", "frontend/src/services/authService.ts"],
   "exclude": ["node_modules", "dist"]
 }

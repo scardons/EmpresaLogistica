@@ -1,4 +1,5 @@
 "use strict";
+//src/interface/controllers/usuario.controller.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registrar = registrar;
 exports.login = login;

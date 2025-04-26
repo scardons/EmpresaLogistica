@@ -4,13 +4,17 @@
 
 
 /* Fondo oscuro global para toda la página */
+
 html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  background-color: #3b1d95; /* Fondo oscuro */
-  color: #080404; /* Texto blanco por defecto */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  background: linear-gradient(to right, #3b1d95, #1f1f1f); /* Gradiente morado a gris */
+  color: #0f0c0c;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
 body {
@@ -18,8 +22,9 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Asegura que el fondo cubra toda la pantalla */
+  text-align: center;
 }
+
 
 #root {
   width: 100%;
@@ -30,7 +35,7 @@ body {
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
+/* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
@@ -41,4 +46,6 @@ body {
   button {
     background-color: #f9f9f9;
   }
-}
+} */
+
+

@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.7.0",
     "animate.css": "^4.1.1",
     "axios": "^1.9.0",
+    "font-awesome": "^4.7.0",
     "framer-motion": "^12.9.1",
     "jwt-decode": "^4.0.0",
     "react": "^19.0.0",
