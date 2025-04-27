@@ -8,6 +8,6 @@ interface TransportistaFormData {
 }
 
 export const registrarTransportista = async (data:TransportistaFormData) => {
-    const response = await axios.post('/transportistas', data)
+    const response = await axios.post('http://localhost:3000/transportistas', data)
     return response.data
 }

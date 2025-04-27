@@ -8,6 +8,8 @@ import RegisterForm from './Registro';
 import Dashboard from './Dashboard';
 import Home from './Home';
 import RegisterTransportistaForm from './RegisterTransportistaForm';
+import RegistrarEnvio from './RegistrarEnvio';
+import AsignarRuta from './AsignarRuta';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/" element={<Home />} />
           <Route path="/registrar-transportista" element={<RegisterTransportistaForm />} />
+          <Route path="/registrar-envio" element={<RegistrarEnvio />} />
+          <Route path="/asignar-ruta" element={<AsignarRuta />} />
         </Routes>
       </Router>
     </>

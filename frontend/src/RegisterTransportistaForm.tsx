@@ -24,7 +24,7 @@ export default function RegisterTransportistaForm() {
       await registrarTransportista(data);
       alert('Transportista registrado exitosamente');
       reset();
-      navigate('/'); // o a la ruta que prefieras
+      navigate('/Dashboard'); // o a la ruta que prefieras
     } catch (error) {
       alert('Hubo un error al registrar el transportista');
       console.error('Error en el registro:', error);
@@ -79,7 +79,7 @@ export default function RegisterTransportistaForm() {
 
       <button
         type="button"
-        onClick={() => navigate('/')}
+        onClick={() => navigate('/Dashboard')}
         className="p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-gray-400"
       >
         Volver
