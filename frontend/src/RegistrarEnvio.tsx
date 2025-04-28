@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { registrarEnvio, EnvioData } from './services/envioService';
+import { useNavigate } from 'react-router-dom';
 
 export default function RegistrarEnvio() {
   const [formData, setFormData] = useState<EnvioData>({
@@ -9,6 +10,8 @@ export default function RegistrarEnvio() {
     dimensiones: '',
     tipoProducto: '',
   });
+
+  const navigate = useNavigate()
 
   const [error, setError] = useState<string>(''); // Estado para manejar el error
 
@@ -96,6 +99,15 @@ export default function RegistrarEnvio() {
         >
           Registrar Envío
         </button>
+
+        <button
+        type="button"
+        onClick={() => navigate('/Dashboard')}
+        className="p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-gray-400"
+      >
+        Volver
+      </button>
+
       </form>
     </div>
   );

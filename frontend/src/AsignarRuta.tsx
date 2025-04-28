@@ -1,6 +1,8 @@
 // src/pages/AsignarRuta.tsx
 import { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { asignarRuta } from '../src/services/asignarRutaServices'
+
 
 export default function AsignarRuta() {
   const [formData, setFormData] = useState({
@@ -8,6 +10,8 @@ export default function AsignarRuta() {
     rutaId: '',
     transportistaId: '',
   });
+
+  const navigate = useNavigate()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,19 +21,19 @@ export default function AsignarRuta() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:3000/envios/asignar-ruta', {
+      await asignarRuta({
         envioId: parseInt(formData.envioId),
         rutaId: parseInt(formData.rutaId),
         transportistaId: parseInt(formData.transportistaId),
       });
 
-      console.log(response.data);
       alert('Ruta asignada correctamente');
     } catch (error) {
       console.error(error);
       alert('Error al asignar ruta');
     }
   };
+
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
@@ -70,6 +74,15 @@ export default function AsignarRuta() {
         >
           Asignar Ruta
         </button>
+
+        <button
+        type="button"
+        onClick={() => navigate('/Dashboard')}
+        className="p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-gray-400"
+      >
+        Volver
+      </button>
+
       </form>
     </div>
   );

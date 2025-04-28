@@ -13,3 +13,8 @@ export const registrarEnvio = async (data: EnvioData) => {
   const response = await axios.post('http://localhost:3000/envios/registrar', data);
   return response.data;
 };
+
+export const listarEnvios = async () => {
+  const response = await axios.get('http://localhost:3000/envios/todos')
+  return response.data
+}
