@@ -1,24 +1,12 @@
 // src/pages/ListarEnvios.tsx
 import React, { useEffect, useState } from 'react';
-import { listarEnvios } from '../src/services/envioService';
-
-interface Envio {
-  id: number;
-  destinatario: string;
-  direccion: string;
-  peso: number;
-  dimensiones: string;
-  tipoProducto: string;
-  fechaRegistro: string;
-  fechaEntrega: string | null;
-  estado: string;
-  rutaId: number;
-  transportistaId: number;
-}
+import { Envio, listarEnvios } from '../src/services/envioService';
+import { useNavigate } from 'react-router-dom';
 
 const ListarEnvios: React.FC = () => {
   const [envios, setEnvios] = useState<Envio[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEnvios = async () => {
@@ -35,44 +23,52 @@ const ListarEnvios: React.FC = () => {
     fetchEnvios();
   }, []);
 
-  if (loading) return <div>Cargando envíos...</div>;
+  if (loading)
+    return (
+      <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">
+        <p className="text-lg">Cargando envíos...</p>
+      </div>
+    );
 
   return (
-<div className="p-8">
-  <h1 className="bg-yellow-400 text-black text-4xl font-bold">
-    Lista de Envíos
-  </h1>
+    <div className="min-h-screen bg-gray-900 text-white p-8">
+      <h1 className="text-4xl font-bold mb-2">Lista de Envíos</h1>
+      <p className="text-gray-400 mb-6">Texto de prueba abajo del título</p>
 
-  <p className="mt-2 text-gray-600">Texto de prueba abajo del título</p>
+      <button
+        onClick={() => navigate('/dashboard')}
+        className="bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-2 rounded font-semibold shadow mb-6 transition-colors"
+      >
+        Volver al Dashboard
+      </button>
 
-  <div className="overflow-x-auto mt-4">
-    <table className="min-w-[800px] w-full border-collapse border border-gray-300">
-      <thead>
-        <tr className="bg-gray-100">
-          <th className="border p-2">ID</th>
-          <th className="border p-2">Destinatario</th>
-          <th className="border p-2">Dirección</th>
-          <th className="border p-2">Peso</th>
-          <th className="border p-2">Tipo Producto</th>
-          <th className="border p-2">Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        {envios.map((envio) => (
-          <tr key={envio.id}>
-            <td className="border p-2">{envio.id}</td>
-            <td className="border p-2">{envio.destinatario}</td>
-            <td className="border p-2">{envio.direccion}</td>
-            <td className="border p-2">{envio.peso} kg</td>
-            <td className="border p-2">{envio.tipoProducto || '-'}</td>
-            <td className="border p-2">{envio.estado}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-</div>
-
+      <div className="overflow-x-auto">
+        <table className="min-w-[800px] w-full border-collapse">
+          <thead>
+            <tr className="bg-gray-800 text-yellow-500">
+              <th className="border border-gray-700 p-3 text-left">ID</th>
+              <th className="border border-gray-700 p-3 text-left">Destinatario</th>
+              <th className="border border-gray-700 p-3 text-left">Dirección</th>
+              <th className="border border-gray-700 p-3 text-left">Peso</th>
+              <th className="border border-gray-700 p-3 text-left">Tipo Producto</th>
+              <th className="border border-gray-700 p-3 text-left">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            {envios.map((envio) => (
+              <tr key={envio.id} className="hover:bg-gray-800 transition-colors">
+                <td className="border border-gray-700 p-3">{envio.id}</td>
+                <td className="border border-gray-700 p-3">{envio.destinatario}</td>
+                <td className="border border-gray-700 p-3">{envio.direccion}</td>
+                <td className="border border-gray-700 p-3">{envio.peso} kg</td>
+                <td className="border border-gray-700 p-3">{envio.tipoProducto || '-'}</td>
+                <td className="border border-gray-700 p-3">{envio.estado}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 };
 

@@ -2,20 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-
-/* Fondo oscuro global para toda la página */
-
+/* Reset básico */
 html, body {
+  @apply bg-background text-neon-green;
   margin: 0;
   padding: 0;
   height: 100%;
+  width: 100%;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  background: linear-gradient(to right, #3b1d95, #1f1f1f); /* Gradiente morado a gris */
-  /* color: #0f0c0c; */
-  justify-content: center;
-  align-items: center;
+}
+
+/* Para que #root siempre ocupe toda la pantalla */
+#root {
+  width: 100%;
   min-height: 100vh;
 }
+
+/* Elimina el fondo forzado aquí */
+/* Si quieres, puedes poner fondos personalizados dentro de tus componentes, no aquí */
 
 body {
   display: flex;
@@ -25,11 +29,7 @@ body {
   text-align: center;
 }
 
-
-#root {
-  width: 100%;
-  min-height: 100vh;
-}
+/* Puedes guardar este código comentado por si en algún momento quieres un fondo estático */
 
 /* @media (prefers-color-scheme: light) {
   :root {

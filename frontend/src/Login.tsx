@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { loginUsuario } from './services/authService'; // Asegúrate de que la ruta sea correcta
-// Si usas react-router-dom para redirección, puedes descomentar lo siguiente:
+import { loginUsuario } from './services/authService';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginFormData {
@@ -16,17 +15,12 @@ export default function LoginForm() {
     reset,
   } = useForm<LoginFormData>();
 
-  // const navigate = useNavigate(); // Descomenta si usas react-router-dom
-
-
-  // dentro del componente LoginForm
   const navigate = useNavigate();
-  
+
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await loginUsuario(data);
       localStorage.setItem('token', response.token);
-      alert('Login exitoso');
       reset();
       navigate('/dashboard'); // redirección al dashboard
     } catch (err) {
@@ -34,50 +28,68 @@ export default function LoginForm() {
       console.error('Error en el login:', err);
     }
   };
-  
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="bg-white p-10 rounded-xl shadow-lg w-full max-w-md mx-auto flex flex-col gap-4 animate__animated animate__fadeIn animate__faster"
-    >
-      <h2 className="text-center mb-4 text-gray-800 font-sans text-xl font-bold">Iniciar sesión</h2>
+    <div className="flex flex-col min-h-screen bg-background text-white">
+      <div className="flex flex-col justify-center items-center p-10 gap-6">
+        <h2 className="text-center mb-4 text-neon-green font-sans text-2xl font-bold">
+          Iniciar sesión
+        </h2>
 
-      {/* Campo de Email */}
-      <input
-        {...register('email', { required: 'Email requerido' })}
-        placeholder="Email"
-        type="email"
-        className="p-3 rounded-lg border border-gray-300 text-lg"
-      />
-      {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md flex flex-col gap-4 animate__animated animate__fadeIn animate__faster"
+        >
+          {/* Campo de Email */}
+          <input
+            {...register('email', { required: 'Email requerido' })}
+            type="email"
+            placeholder="Correo electrónico"
+            className="p-3 rounded-lg border border-gray-300 text-lg text-black placeholder-gray-500"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email.message}</p>
+          )}
 
-      {/* Campo de Contraseña */}
-      <input
-        type="password"
-        {...register('password', { required: 'Contraseña requerida' })}
-        placeholder="Contraseña"
-        className="p-3 rounded-lg border border-gray-300 text-lg"
-      />
-      {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+          {/* Campo de Contraseña */}
+          <input
+            type="password"
+            {...register('password', { required: 'Contraseña requerida' })}
+            placeholder="Contraseña"
+            className="p-3 rounded-lg border border-gray-300 text-lg text-black placeholder-gray-500"
+          />
+          {errors.password && (
+            <p className="text-red-500 text-sm">{errors.password.message}</p>
+          )}
 
+          {/* Botón de Enviar */}
+          <button
+            type="submit"
+            className="p-3 bg-neon-green text-black rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-neon-pink"
+          >
+            Iniciar sesión
+          </button>
 
-      {/* Botón de Enviar */}
-      <button
-        type="submit"
-        className="p-3 bg-blue-500 text-white rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-blue-700"
-      >
-        Iniciar sesión
-      </button>
+          {/* Botón Volver */}
+          <button
+            type="button"
+            onClick={() => navigate('/')}
+            className="p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold transition duration-300 hover:bg-gray-400"
+          >
+            Volver
+          </button>
+        </form>
+      </div>
 
-      <button
-        type="button"
-        onClick={() => navigate('/')}
-        className='p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold transition duration-300 hover:bg-gray-400'
-      >
-        Volver
-      </button>
-
-    </form>
+      {/* Imagen del fondo */}
+      <div className="w-full mt-10">
+        <img
+          src="/camion.png"
+          alt="Camion de entrega"
+          className="w-full"
+          style={{ height: '380px' }}
+        />
+      </div>
+    </div>
   );
 }

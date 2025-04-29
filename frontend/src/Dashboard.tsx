@@ -1,62 +1,130 @@
-import { useNavigate } from 'react-router-dom';
+"use client"
+
+import { motion, AnimatePresence } from "framer-motion"
+import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { FaBars, FaTimes } from "react-icons/fa"
 
 export default function Dashboard() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false)
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    navigate('/login');
-  };
+  const opciones = [
+    { label: "Registrar Transportista", path: "/registrar-transportista" },
+    { label: "Registrar Envío", path: "/registrar-envio" },
+    { label: "Asignar Ruta", path: "/asignar-ruta" },
+    { label: "Ver Estado de Envío", path: "/ver-estado" },
+    { label: "Actualizar Estado de Envío", path: "/actualizar-estado" },
+    { label: "Listar Envíos", path: "/envios" },
+  ]
 
-  const irARegistrarTransportista = () => {
-    navigate('/registrar-transportista');
-  };
-
-  const irARegistrarEnvio = () => {
-    navigate('/registrar-envio')
+  const handleNavigation = (path: string) => {
+    navigate(path)
+    setIsOpen(false)
   }
 
-  const irAsignarRuta = () => {
-    navigate('/asignar-ruta')
+  const handleLogout = () => {
+    localStorage.removeItem("token")
+    navigate("/login")
+  }
+
+  const sidebarVariants = {
+    hidden: { x: "-100%" },
+    visible: { x: "0%" },
+    exit: { x: "-100%" },
+  }
+
+  const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 0.5 },
+    exit: { opacity: 0 },
+  }
+
+  const buttonVariants = {
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 },
   }
 
   return (
-    <div className="p-8 text-center flex flex-col items-center gap-6">
-      <h1 className="text-3xl font-bold mb-4 text-white">Bienvenido al Dashboard</h1>
-      <p className="text-lg mb-6 text-white">Aquí podrás ver tu información general.</p>
+    <div className="relative min-h-screen bg-black text-white overflow-hidden">
 
-      {/* Botón para registrar transportista */}
-      <button
-        onClick={irARegistrarTransportista}
-        className="w-full max-w-md p-6 bg-blue-500 text-white rounded-lg text-2xl font-bold hover:bg-blue-600 transition duration-300"
+      {/* Botón flotante para abrir el menú */}
+      <motion.button
+        onClick={() => setIsOpen(true)}
+        className="fixed top-6 left-6 z-30 p-3 bg-neon-orange text-black rounded-full shadow-lg"
+        variants={buttonVariants}
+        whileHover="hover"
+        whileTap="tap"
       >
-        Registrar Transportista
-      </button>
+        <FaBars size={24} />
+      </motion.button>
 
+      {/* Contenido principal */}
+      <div className="p-8 text-center">
+        <h1 className="text-3xl font-bold text-neon-orange mb-4">Bienvenido al Dashboard</h1>
+        <p className="text-lg text-white">Aquí podrás ver tu información general.</p>
+      </div>
 
-      {/* Botón para registrar envio */}
-      <button
-        onClick={irARegistrarEnvio}
-        className="w-full max-w-md p-6 bg-blue-500 text-white rounded-lg text-2xl font-bold hover:bg-blue-600 transition duration-300"
-      >
-        Registrar envio
-      </button>
+      {/* Sidebar animado */}
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black z-20"
+              variants={overlayVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={() => setIsOpen(false)}
+            />
 
-            {/* Botón para asignar ruta */}
-            <button
-        onClick={irAsignarRuta}
-        className="w-full max-w-md p-6 bg-blue-500 text-white rounded-lg text-2xl font-bold hover:bg-blue-600 transition duration-300"
-      >
-        Asignar ruta
-      </button>
+            <motion.div
+              className="fixed top-0 left-0 w-72 h-full bg-background p-6 flex flex-col gap-4 z-30"
+              variants={sidebarVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ type: "spring", stiffness: 100 }}
+            >
+              {/* Botón para cerrar */}
+              <motion.button
+                onClick={() => setIsOpen(false)}
+                className="self-end mb-6 p-2 bg-neon-orange text-white rounded-full"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                <FaTimes size={24} />
+              </motion.button>
 
-      {/* Botón para cerrar sesión */}
-      <button
-        onClick={handleLogout}
-        className="px-4 py-2 bg-red-500 text-white rounded-md text-base font-semibold hover:bg-red-600 transition duration-300 mt-4"
-      >
-        Cerrar sesión
-      </button>
+              {/* Opciones de navegación */}
+              {opciones.map((opcion, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => handleNavigation(opcion.path)}
+                  className="p-3 w-full text-left bg-neon-orange text-black rounded-md font-semibold hover:text-white transition"
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  {opcion.label}
+                </motion.button>
+              ))}
+
+              {/* Botón de cerrar sesión */}
+              <motion.button
+                onClick={handleLogout}
+                className="p-3 w-full text-left bg-red-600 text-white rounded-md font-bold mt-4 hover:bg-red-700 transition"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+              >
+                Cerrar Sesión
+              </motion.button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
-  );
+  )
 }
