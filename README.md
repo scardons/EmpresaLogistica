@@ -27,6 +27,13 @@ Este es un proyecto backend desarrollado en **TypeScript** con **Express**, que 
 - Docker (opcional)
 - Clean Architecture
 
+- **Frontend**:
+  - React
+  - TypeScript
+  - TailwindCSS
+  - React Router
+  - Axios
+
 ## 📁 Estructura del proyecto
 
 src/ ├── config/ ├── controllers/ ├── middlewares/ ├── models/ ├── routes/ ├── utils/ ├── domain/ │ ├── entities/ │ ├── repositories/ │ └── use-cases/ ├── infrastructure/ │ └── repositories/ ├── app.ts ├── index.ts tests/
@@ -56,6 +63,15 @@ DB_NAME=envios_db
 JWT_SECRET=clave_secreta
 REDIS_HOST=localhost
 REDIS_PORT=6379
+
+🧱 Frontend
+bash
+Copiar
+Editar
+cd frontend
+npm install
+npm run dev
+
 🧪 Pruebas
 bash
 Copiar
@@ -72,4 +88,4 @@ docker run --name redis-app -p 6379:6379 -d redis
 Disponible en http://localhost:3000/api-docs (Swagger).
 
 ✨ Autor
-Desarrollado por [Santiago Cardona]
+Desarrollado por [ Santiago Cardona]
