@@ -79,7 +79,6 @@ Editar
 npm run test
 🐳 Docker
 Puedes correr Redis con Docker:
-
 bash
 Copiar
 Editar
@@ -89,3 +88,6 @@ Disponible en http://localhost:3000/api-docs (Swagger).
 
 ✨ Autor
 Desarrollado por [ Santiago Cardona]
+
+usuario: santiago@example.com
+contraseña: 123456
