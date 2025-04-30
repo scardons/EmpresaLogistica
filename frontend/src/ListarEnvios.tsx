@@ -12,7 +12,7 @@ const ListarEnvios: React.FC = () => {
     const fetchEnvios = async () => {
       try {
         const data = await listarEnvios();
-        setEnvios(data);
+        setEnvios(data as Envio[]);
       } catch (error) {
         console.error('Error al listar envíos:', error);
       } finally {

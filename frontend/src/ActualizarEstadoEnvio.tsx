@@ -11,8 +11,9 @@ const ActualizarEstadoEnvio = () => {
   const handleActualizar = async () => {
     try {
       const data = await actualizarEstadoEnvio(envioId, nuevoEstado);
-      setMensaje(data.mensaje);
+      setMensaje((data as { mensaje: string}).mensaje);
       setError('');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
       setMensaje('');
       setError('Error al actualizar el estado del envío.');

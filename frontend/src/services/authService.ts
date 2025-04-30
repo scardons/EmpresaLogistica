@@ -32,18 +32,12 @@ export const loginUsuario = async (data: UsuarioCredenciales): Promise<LoginResp
   try {
     const response = await axios.post<LoginResponse>('http://localhost:3000/usuarios/login', data);
     return response.data;
-  } catch (error) {
-    // Usamos axios.isAxiosError para verificar si es un error de Axios
-    if (axios.isAxiosError(error)) {
-      // Si la respuesta existe, manejamos el mensaje
-      const mensaje = error.response?.data?.message || 'Error al iniciar sesión';
-      throw new Error(mensaje);
-    } else {
-      // Si no es un error de Axios, lanzamos un error genérico
-      throw new Error('Error inesperado al iniciar sesión');
-    }
+  } catch (error: any) {
+    const mensaje = error?.response?.data?.message || 'Error al iniciar sesión';
+    throw new Error(mensaje);
   }
 };
+
 
 // Función para obtener el perfil del usuario
 export const obtenerPerfil = async (token: string): Promise<PerfilResponse> => {

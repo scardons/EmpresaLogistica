@@ -22,7 +22,7 @@ export default function LoginForm() {
       const response = await loginUsuario(data);
       localStorage.setItem('token', response.token);
       reset();
-      navigate('/dashboard'); // redirección al dashboard
+      navigate('/dashboard');
     } catch (err) {
       alert('Hubo un error al intentar iniciar sesión');
       console.error('Error en el login:', err);

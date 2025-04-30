@@ -34,7 +34,7 @@ export default function Home() {
 
       {/*Imagen del camion*/}
       <div className="w-full">
-        <img src="/camion.png" alt="Camion de entrega" className="w-full" style={{height: '380px'}} />
+      <img src={`${import.meta.env.BASE_URL}camion.png`} alt="Camion de entrega" className="w-full" style={{ height: '380px' }} />
       </div>
 
       {/* Botones de sesión - ahora centrados abajo */}
@@ -54,7 +54,7 @@ export default function Home() {
       {/*contenido central*/}
       <div className="flex-grow flex items-center justify-center text-center">
         <div>
-          <h1 className="font-bold mb-5 text-neon-green">¡Bienvenido a mi app!</h1>
+          <h1 className="font-bold mb-5 text-neon-green">¡Servicio de entrega!</h1>
           <p className="text-lg text-white ">Gestiona tus envíos y rutas con facilidad.</p>
         </div>
       </div>

@@ -14,25 +14,22 @@ import VerEstadoEnvio from './ConsultarEstadoEnvio';
 import ActualizarEstadoEnvio from './ActualizarEstadoEnvio';
 import ListarEnvios from './ListarEnvios';
 
-
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/register" element={<RegisterForm />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/Dashboard" element={<Dashboard />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/registrar-transportista" element={<RegisterTransportistaForm />} />
-          <Route path="/registrar-envio" element={<RegistrarEnvio />} />
-          <Route path="/asignar-ruta" element={<AsignarRuta />} />
-          <Route path="/ver-estado" element={<VerEstadoEnvio />} />
-          <Route path="/actualizar-estado" element={<ActualizarEstadoEnvio />} />
-          <Route path="/envios" element={<ListarEnvios />} />
-        </Routes>
-      </Router>
-    </>
+    <Router basename="/EmpresaLogistica"> {/* Añadir basename aquí */}
+      <Routes>
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/registrar-transportista" element={<RegisterTransportistaForm />} />
+        <Route path="/registrar-envio" element={<RegistrarEnvio />} />
+        <Route path="/asignar-ruta" element={<AsignarRuta />} />
+        <Route path="/ver-estado" element={<VerEstadoEnvio />} />
+        <Route path="/actualizar-estado" element={<ActualizarEstadoEnvio />} />
+        <Route path="/envios" element={<ListarEnvios />} />
+      </Routes>
+    </Router>
   );
 }
 

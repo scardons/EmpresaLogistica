@@ -15,7 +15,7 @@ const ConsultarEstadoEnvio = () => {
     const fetchEstados = async () => {
       try {
         const data = await consultarEstadoEnvio();
-        setEnvios(data);
+        setEnvios(data as EstadoEnvio[]);
         setError('');
       } catch (err) {
         console.error(err);
