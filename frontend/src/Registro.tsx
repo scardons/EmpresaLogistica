@@ -63,10 +63,29 @@ export default function RegisterForm() {
 
           {/* campo contraseña */}
           <input
+          type='password'
           {...register('password', {required: 'Contraseña requerida'})}
           placeholder='Contraseña'
-          className='p-3 rounded-lg border border-gray-300 text-lg text-black'
+          className='p-3 rounded-lg border border-gray-300 text-lg text-black placeholder-gray-500'
           />
+          {errors.password && (
+            <p className='text-red-500 text-sm'>{errors.password.message}</p>
+          )}
+          {/*Boton de registro */}
+          <button
+            type='submit'
+            className='p-3 bg-neon-green text-black rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-neon-pink'
+          >
+            Registrarse
+          </button>
+          {/* Boton de volver */}
+          <button
+            type='button'
+            onClick={() => navigate('/')}
+            className='p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold transition duration-300 hover:bg-gray-400'
+          >
+            Volver
+          </button>
         </form>
       </div>
     </div>

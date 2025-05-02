@@ -2,6 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Aquí debes ponerlo */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Estilo para los elementos de la lista */
+ul li {
+  transition: transform 0.3s ease-in-out; /* Añade una transición suave */
+}
+
+ul li:hover {
+  transform: translateX(20px); /* Mueve a la derecha cuando el mouse pasa por encima */
+}
+
 /* Reset básico */
 html, body {
   @apply bg-background text-neon-green;
@@ -30,7 +48,7 @@ body {
 }
 
 /* Puedes guardar este código comentado por si en algún momento quieres un fondo estático */
-
+/*bg-gradient-to-r from-neon-orange to-neon-pink color favorito*/
 /* @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -43,5 +61,3 @@ body {
     background-color: #f9f9f9;
   }
 } */
-
-

@@ -80,16 +80,6 @@ export default function LoginForm() {
           </button>
         </form>
       </div>
-
-      {/* Imagen del fondo */}
-      <div className="w-full mt-10">
-        <img
-          src="/camion.png"
-          alt="Camion de entrega"
-          className="w-full"
-          style={{ height: '380px' }}
-        />
-      </div>
     </div>
   );
 }
