@@ -22,12 +22,17 @@ ul li:hover {
 
 /* Reset básico */
 html, body {
-  @apply bg-background text-neon-green;
+  @apply bg-background text-neon-green; /* Aquí puedes usar las variables de Tailwind para colores */
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 /* Para que #root siempre ocupe toda la pantalla */
@@ -36,28 +41,24 @@ html, body {
   min-height: 100vh;
 }
 
-/* Elimina el fondo forzado aquí */
-/* Si quieres, puedes poner fondos personalizados dentro de tus componentes, no aquí */
-
+/* Fondo blanco o gradiente global */
 body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  background-color: var(--white); /* Asegúrate de tener este valor en tu :root para mantenerlo consistente */
+  background-image: linear-gradient(90deg, var(--pink), var(--purple), var(--blue)); /* Aquí añades tu gradiente */
 }
 
-/* Puedes guardar este código comentado por si en algún momento quieres un fondo estático */
-/*bg-gradient-to-r from-neon-orange to-neon-pink color favorito*/
-/* @media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-} */
+/* Esto es opcional, pero útil para garantizar que el texto se muestre con el gradiente */
+body {
+  color: var(--accent); /* Color del texto ajustado al fondo */
+}
+
+/* Personaliza tu fondo de pantalla si prefieres que esté en ciertos elementos */
+.bg-white {
+  background-color: #ffffff;
+}
+
+.bg-gradient-custom {
+  background-image: linear-gradient(90deg, var(--pink), var(--purple), var(--blue));
+}
+
+/* No aplicar el fondo en los componentes si lo gestionas aquí */

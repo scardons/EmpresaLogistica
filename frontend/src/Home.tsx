@@ -7,19 +7,50 @@ import ContactSection from '../src/components/ContactSection';
 import SolutionsSection from '../src/components/SolutionsSection';
 import ScrollLinked from '../src/components/ScrollLinked';
 import { ParticlesBackground } from './components/ParticlesBackground';
-
+import ParallaxText from './components/ParallaxText'; // 👉 Importa el nuevo componente
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen text-white">
-          <ParticlesBackground />
+    <div className="flex flex-col min-h-screen bg-white text-white">
+      {/* Fondo de partículas */}
+      <ParticlesBackground />
+      
+      {/* Cabecera de la página con fuente personalizada */}
       <Header />
+      
+      {/* Barra verde al principio */}
       <GreenBar />
+      
+      {/* Sección de video */}
       <VideoSection />
+      
+      {/* Texto Parallax de bienvenida */}
+      <section className="parallax-text-section">
+        <ParallaxText 
+          text="¡Bienvenido a Empresa Logística!" 
+          baseVelocity={-5} 
+          className="my-10 text-4xl text-black bg-gradient-to-r from-neon-orange to-neon-pink font-semibold uppercase font-sans"
+        />
+        <ParallaxText 
+          text="Innovación y eficiencia en cada envío 🚚" 
+          baseVelocity={5} 
+          className="my-10 text-4xl text-black bg-gradient-to-r from-neon-orange to-neon-pink font-semibold uppercase font-sans"
+        />
+      </section>
+
+      {/* Botones de autenticación */}
       <AuthButtons />
+      
+      {/* Contenido principal */}
       <MainContent />
+      
+      {/* Sección de desplazamiento vinculado */}
       <ScrollLinked />
+      
+      {/* Sección de contacto */}
       <ContactSection />
+      
+      {/* Sección de soluciones */}
       <SolutionsSection />
     </div>
   );

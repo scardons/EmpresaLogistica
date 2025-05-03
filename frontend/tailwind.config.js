@@ -16,6 +16,11 @@ export default {
         'secondary': '#FF00FF',    // Color secundario (rosa neón)
         'black': '#000000 ',
       },
+      fontFamily: {
+        // Aquí puedes definir tu fuente personalizada, por ejemplo 'Roboto' o cualquier otra.
+        sans: ['Roboto', 'Arial', 'sans-serif'],
+        monoCustom: ['input-mono', 'monospace'], // 👈 Aquí defines la fuente
+      },
     },
   },
   plugins: [],

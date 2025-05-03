@@ -3,20 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://scardons.github.io/EmpresaLogistica",  
-
+  "homepage": "https://scardons.github.io/EmpresaLogistica",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build", 
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@hookform/resolvers": "^5.0.1",
+    "@motionone/utils": "^10.18.0",
     "@reduxjs/toolkit": "^2.7.0",
     "@tsparticles/engine": "^3.8.1",
     "@tsparticles/react": "^3.0.0",

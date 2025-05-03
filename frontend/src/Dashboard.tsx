@@ -51,7 +51,7 @@ export default function Dashboard() {
       {/* Botón flotante para abrir el menú */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed top-6 left-6 z-30 p-3 bg-neon-orange text-black rounded-full shadow-lg"
+        className="fixed top-6 left-6 z-30 p-3 bg-gradient-to-r from-neon-orange to-neon-pink text-black rounded-full shadow-lg"
         variants={buttonVariants}
         whileHover="hover"
         whileTap="tap"
@@ -70,7 +70,7 @@ export default function Dashboard() {
         {isOpen && (
           <>
             <motion.div
-              className="fixed inset-0 bg-black z-20"
+              className="fixed inset-0 bg-white z-20"
               variants={overlayVariants}
               initial="hidden"
               animate="visible"
@@ -79,7 +79,7 @@ export default function Dashboard() {
             />
 
             <motion.div
-              className="fixed top-0 left-0 w-72 h-full bg-background p-6 flex flex-col gap-4 z-30"
+              className="fixed top-0 left-0 w-72 h-full  p-6 flex flex-col gap-4 z-30"
               variants={sidebarVariants}
               initial="hidden"
               animate="visible"
@@ -89,7 +89,7 @@ export default function Dashboard() {
               {/* Botón para cerrar */}
               <motion.button
                 onClick={() => setIsOpen(false)}
-                className="self-end mb-6 p-2 bg-neon-orange text-white rounded-full"
+                className="self-end mb-6 p-2 bg-yellow-300 text-white rounded-full"
                 variants={buttonVariants}
                 whileHover="hover"
                 whileTap="tap"
@@ -102,7 +102,7 @@ export default function Dashboard() {
                 <motion.button
                   key={index}
                   onClick={() => handleNavigation(opcion.path)}
-                  className="p-3 w-full text-left bg-neon-orange text-black rounded-md font-semibold hover:text-white transition"
+                  className="p-3 w-full text-left bg-yellow-300 text-black rounded-md font-semibold hover:text-white transition"
                   variants={buttonVariants}
                   whileHover="hover"
                   whileTap="tap"
