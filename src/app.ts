@@ -1,23 +1,18 @@
-// src/app.ts
 import express from 'express';
-import usuarioRoutes from './interfaces/routes/usuario.routes';
 import { ensureRedisConnection, redisClient } from './shared/redisClient';
 import { pool } from './config/db';
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './config/swagger';
-import envioRoutes from './interfaces/routes/envio.routes';
-import transportistaRoutes from "./interfaces/routes/transportista.routes";
-import envioEstadoRoutes from './interfaces/routes/envioEstado.routes';
-import filtrosRoutes from './interfaces/routes/filtros.routes';
-import cors from 'cors'
+import cors from 'cors';
+import { setupRoutes } from './interfaces/routes';
 
 const app = express();
 
 // Configuración de CORS
 app.use(cors({
-  origin: 'http://localhost:5173', // Permite solicitudes solo desde tu frontend (ajústalo si tu frontend está en otro puerto/dominio)
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'], // Encabezados permitidos
+  origin: ['http://localhost:5173', 'https://scardons.github.io'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
 // Documentación Swagger
@@ -26,13 +21,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Middleware para manejar JSON
 app.use(express.json());
 
-// Rutas para el manejo de usuarios, envíos y filtros
-app.use('/usuarios', usuarioRoutes);
-app.use('/envios', envioRoutes);
-app.use("/transportistas", transportistaRoutes);
-app.use("/envio", envioEstadoRoutes);
-app.use('/api/envios', filtrosRoutes);  // Ruta de filtros
-
+// Configurar las rutas desde interfaces/routes.ts
+setupRoutes(app);
 
 // Ruta para verificar conexión a MySQL
 app.get('/', async (req, res) => {

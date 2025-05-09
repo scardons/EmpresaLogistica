@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { asignarRutaHandler, registrarEnvio } from '../controllers/envio.controller';
+import { ListarEnvioController } from '../controllers/listarEnvio.controller'; // Importa el controlador renombrado
+
 
 const router = Router();
 /**
@@ -122,5 +124,8 @@ router.post('/registrar', registrarEnvio);
  */
 
 router.post('/asignar-ruta', asignarRutaHandler);
+
+router.get('/todos', ListarEnvioController.listarEstados);
+
 
 export default router;

@@ -11,5 +11,6 @@ export interface Envio {
     transportista: string
     fechaEntrega?: Date
     tiempoEntrega?: number | null         
+    rutaId: number;
   }
   

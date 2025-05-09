@@ -7,7 +7,7 @@ import ContactSection from '../src/components/ContactSection';
 import SolutionsSection from '../src/components/SolutionsSection';
 import ScrollLinked from '../src/components/ScrollLinked';
 import { ParticlesBackground } from './components/ParticlesBackground';
-import ParallaxText from './components/ParallaxText'; // 👉 Importa el nuevo componente
+import ParallaxText from './components/ParallaxText'; 
 
 export default function Home() {
   return (
