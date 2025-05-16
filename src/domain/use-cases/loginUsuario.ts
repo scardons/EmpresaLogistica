@@ -1,5 +1,6 @@
+//src/domain/use-cases/loginUsuario.ts
 import dotenv from 'dotenv';
-dotenv.config(); // Esto debe ir antes de usar process.env
+dotenv.config(); 
 
 import { IUsuarioRepository } from '../repositories/IUsuarioRepository';
 import bcrypt from 'bcrypt';

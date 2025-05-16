@@ -26,6 +26,7 @@ export const registrarEnvio = async (req: Request, res: Response) => {
       tipoProducto,
       transportista,
       fechaEntrega,
+      rutaId: 0
     });
 
     res.status(201).json(envio);

@@ -1,31 +1,14 @@
 //src/interface/controllers/usuario.controller.ts
 
 import { Request, Response } from 'express';
-import { RegistrarUsuario } from '../../domain/use-cases/registrarUsuario';
 import { LoginUsuario } from '../../domain/use-cases/loginUsuario';
 import { UsuarioRepository } from '../../infrastructure/repositories/usuario.repository.mysql';
 import { AuthRequest } from '../../interfaces/middlewares/authMiddleware';
 
 
 const usuarioRepository = new UsuarioRepository();
-const registrarUsuarioUseCase = new RegistrarUsuario(usuarioRepository);
 const loginUsuarioUseCase = new LoginUsuario(usuarioRepository);
 
-export async function registrar(req: Request, res: Response): Promise<void> {
-  const { nombre, email, password } = req.body;
-
-  if (!nombre || !email || !password) {
-  res.status(400).json({ message: 'Todos los campos son obligatorios' });
-  return 
-  }
-
-  try {
-    await registrarUsuarioUseCase.execute(nombre, email, password);
-    res.status(201).json({ message: 'Usuario registrado correctamente' });
-  } catch (error) {
-    res.status(500).json({ message: 'Error al registrar el usuario', error });
-  }
-}
 
 // controlador del login
 
