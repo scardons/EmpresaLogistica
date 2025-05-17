@@ -32,13 +32,13 @@ export default function LoginForm() {
   return (
     <div className="flex flex-col min-h-screen bg-white text-white">
       <div className="flex flex-col justify-center items-center p-10 gap-6">
-        <h2 className="text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-neon-orange to-neon-pink font-sans text-2xl font-bold">
+        <h2 className="text-center mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500 font-sans text-2xl font-bold">
           Iniciar sesión
         </h2>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="bg-gradient-to-r from-neon-orange to-neon-pink p-8 rounded-xl shadow-lg w-full max-w-md flex flex-col gap-4 animate__animated animate__fadeIn animate__faster"
+          className="bg-gradient-to-r from-blue-800 to-blue-500 p-8 rounded-xl shadow-lg w-full max-w-md flex flex-col gap-4 animate__animated animate__fadeIn animate__faster"
         >
           {/* Campo de Email */}
           <input

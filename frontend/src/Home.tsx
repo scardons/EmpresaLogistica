@@ -29,12 +29,12 @@ export default function Home() {
         <ParallaxText 
           text="¡Bienvenido a Empresa Logística!" 
           baseVelocity={-5} 
-          className="my-10 text-4xl text-black bg-gradient-to-r from-neon-orange to-neon-pink font-semibold uppercase font-sans"
+          className="my-10 text-4xl text-white bg-gradient-to-r from-blue-800 to-blue-400 font-semibold uppercase font-sans"
         />
         <ParallaxText 
           text="Innovación y eficiencia en cada envío 🚚" 
           baseVelocity={5} 
-          className="my-10 text-4xl text-black bg-gradient-to-r from-neon-orange to-neon-pink font-semibold uppercase font-sans"
+          className="my-10 text-4xl text-white bg-gradient-to-r from-blue-800 to-blue-400 font-semibold uppercase font-sans"
         />
       </section>
 

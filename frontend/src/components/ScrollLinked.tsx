@@ -17,7 +17,7 @@ export default function ScrollLinked() {
 
   return (
     <section className="bg-white py-10 px-6 text-white w-full overflow-hidden">
-      <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon-orange to-neon-pink text-center mb-10">Nuestras soluciones de pago</h2>
+      <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-800 to-blue-500 text-center mb-10">Nuestras soluciones de pago</h2>
 
       <div className="relative flex items-center">
         {/* Botón Izquierda */}

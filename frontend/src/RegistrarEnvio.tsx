@@ -11,104 +11,107 @@ export default function RegistrarEnvio() {
     tipoProducto: '',
   });
 
-  const navigate = useNavigate()
-
-  const [error, setError] = useState<string>(''); // Estado para manejar el error
+  const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
-    setFormData(prevState => ({
-      ...prevState,
+    setFormData(prev => ({
+      ...prev,
       [name]: name === 'peso' ? parseFloat(value) || 0 : value,
     }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       await registrarEnvio(formData);
       alert('Envío registrado exitosamente');
-      setError(''); // Limpiar el error si la solicitud fue exitosa
-    } catch (error: any) { // Usamos "any" para que podamos trabajar con el tipo de error completo
-      console.error(error);
-      
-      // Verificar si el error tiene la estructura esperada (response -> data -> message)
-      const errorMessage = error.response?.data?.message || 'Error desconocido'; // Obtener el mensaje de error
-      setError(errorMessage); // Mostrar el mensaje de error
+      setError('');
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Error desconocido';
+      setError(errorMessage);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-center">Registrar Envío</h2>
-
-      {error && <div className="text-red-500 text-sm mb-4">{error}</div>} {/* Mostrar error aquí */}
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="text"
-          name="destinatario"
-          placeholder="Destinatario"
-          value={formData.destinatario}
-          onChange={handleChange}
-          className="border rounded-lg p-2"
-          required
-        />
-        <input
-          type="text"
-          name="direccion"
-          placeholder="Dirección"
-          value={formData.direccion}
-          onChange={handleChange}
-          className="border rounded-lg p-2"
-          required
-        />
-        <input
-          type="number"
-          name="peso"
-          placeholder="Peso (kg)"
-          value={formData.peso}
-          onChange={handleChange}
-          className="border rounded-lg p-2"
-          required
-        />
-        <input
-          type="text"
-          name="dimensiones"
-          placeholder="Dimensiones (LxAxH)"
-          value={formData.dimensiones}
-          onChange={handleChange}
-          className="border rounded-lg p-2"
-          required
-        />
-        <input
-          type="text"
-          name="tipoProducto"
-          placeholder="Tipo de Producto"
-          value={formData.tipoProducto}
-          onChange={handleChange}
-          className="border rounded-lg p-2"
-          required
-        />
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition"
-        >
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8">
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center border-b pb-2">
           Registrar Envío
-        </button>
+        </h2>
 
-        <button
-        type="button"
-        onClick={() => navigate('/Dashboard')}
-        className="p-3 bg-gray-300 text-gray-800 rounded-lg font-semibold cursor-pointer transition duration-300 hover:bg-gray-400"
-      >
-        Volver
-      </button>
+        {error && (
+          <div className="mb-4 text-red-600 text-sm bg-red-100 p-2 rounded">
+            {error}
+          </div>
+        )}
 
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <input
+            type="text"
+            name="destinatario"
+            placeholder="Destinatario"
+            value={formData.destinatario}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            name="direccion"
+            placeholder="Dirección"
+            value={formData.direccion}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="number"
+            name="peso"
+            placeholder="Peso (kg)"
+            value={formData.peso}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            name="dimensiones"
+            placeholder="Dimensiones (LxAxH)"
+            value={formData.dimensiones}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="text"
+            name="tipoProducto"
+            placeholder="Tipo de Producto"
+            value={formData.tipoProducto}
+            onChange={handleChange}
+            className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+
+          <div className="flex flex-col sm:flex-row justify-between gap-4 mt-6">
+            <button
+              type="submit"
+              className="w-full sm:w-1/2 bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition font-medium"
+            >
+              Registrar Envío
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="w-full sm:w-1/2 bg-gray-300 text-gray-800 py-3 rounded-lg hover:bg-gray-400 transition font-medium"
+            >
+              Volver
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

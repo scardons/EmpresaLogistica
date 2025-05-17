@@ -3,19 +3,19 @@
 import { motion, AnimatePresence } from "framer-motion"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
-import { FaBars, FaTimes } from "react-icons/fa"
+import { FaBars, FaTimes, FaTruck, FaPlus, FaRoute, FaEye, FaSync, FaList, FaSignOutAlt } from "react-icons/fa"
 
 export default function Dashboard() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
   const opciones = [
-    { label: "Registrar Transportista", path: "/registrar-transportista" },
-    { label: "Registrar Envío", path: "/registrar-envio" },
-    { label: "Asignar Ruta", path: "/asignar-ruta" },
-    { label: "Ver Estado de Envío", path: "/ver-estado" },
-    { label: "Actualizar Estado de Envío", path: "/actualizar-estado" },
-    { label: "Listar Envíos", path: "/envios" },
+    { label: "Registrar Transportista", path: "/registrar-transportista", icon: <FaTruck /> },
+    { label: "Registrar Envío", path: "/registrar-envio", icon: <FaPlus /> },
+    { label: "Asignar Ruta", path: "/asignar-ruta", icon: <FaRoute /> },
+    { label: "Ver Estado de Envío", path: "/ver-estado", icon: <FaEye /> },
+    { label: "Actualizar Estado", path: "/actualizar-estado", icon: <FaSync /> },
+    { label: "Listar Envíos", path: "/envios", icon: <FaList /> },
   ]
 
   const handleNavigation = (path: string) => {
@@ -28,98 +28,74 @@ export default function Dashboard() {
     navigate("/login")
   }
 
-  const sidebarVariants = {
-    hidden: { x: "-100%" },
-    visible: { x: "0%" },
-    exit: { x: "-100%" },
-  }
-
-  const overlayVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 0.5 },
-    exit: { opacity: 0 },
-  }
-
-  const buttonVariants = {
-    hover: { scale: 1.05 },
-    tap: { scale: 0.95 },
-  }
-
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+    <div className="relative min-h-screen bg-gray-900 text-white overflow-hidden">
 
-      {/* Botón flotante para abrir el menú */}
+      {/* Botón flotante */}
       <motion.button
         onClick={() => setIsOpen(true)}
-        className="fixed top-6 left-6 z-30 p-3 bg-gradient-to-r from-neon-orange to-neon-pink text-black rounded-full shadow-lg"
-        variants={buttonVariants}
-        whileHover="hover"
-        whileTap="tap"
+        className="fixed top-6 left-6 z-30 p-3 bg-blue-600 text-white rounded-full shadow-lg"
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
       >
         <FaBars size={24} />
       </motion.button>
 
       {/* Contenido principal */}
-      <div className="p-8 text-center">
-        <h1 className="text-3xl font-bold text-neon-orange mb-4">Bienvenido al Dashboard</h1>
-        <p className="text-lg text-white">Aquí podrás ver tu información general.</p>
+      <div className="p-12 text-center">
+        <h1 className="text-4xl font-bold mb-4 tracking-wide">Dashboard Corporativo</h1>
+        <p className="text-lg text-gray-300">Gestiona tus envíos, transportistas y rutas de forma eficiente.</p>
       </div>
 
-      {/* Sidebar animado */}
+      {/* Sidebar */}
       <AnimatePresence>
         {isOpen && (
           <>
+            {/* Overlay */}
             <motion.div
-              className="fixed inset-0 bg-white z-20"
-              variants={overlayVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              className="fixed inset-0 bg-black bg-opacity-50 z-20"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
             />
 
+            {/* Sidebar */}
             <motion.div
-              className="fixed top-0 left-0 w-72 h-full  p-6 flex flex-col gap-4 z-30"
-              variants={sidebarVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
+              className="fixed top-0 left-0 w-80 h-full bg-gray-800 p-6 flex flex-col gap-4 z-30 shadow-xl"
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
               transition={{ type: "spring", stiffness: 100 }}
             >
-              {/* Botón para cerrar */}
               <motion.button
                 onClick={() => setIsOpen(false)}
-                className="self-end mb-6 p-2 bg-yellow-300 text-white rounded-full"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
+                className="self-end text-gray-400 hover:text-white"
               >
                 <FaTimes size={24} />
               </motion.button>
 
-              {/* Opciones de navegación */}
               {opciones.map((opcion, index) => (
                 <motion.button
                   key={index}
                   onClick={() => handleNavigation(opcion.path)}
-                  className="p-3 w-full text-left bg-yellow-300 text-black rounded-md font-semibold hover:text-white transition"
-                  variants={buttonVariants}
-                  whileHover="hover"
-                  whileTap="tap"
+                  className="flex items-center gap-3 p-4 bg-gray-700 text-white rounded-lg hover:bg-blue-600 transition"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.95 }}
                 >
-                  {opcion.label}
+                  {opcion.icon}
+                  <span>{opcion.label}</span>
                 </motion.button>
               ))}
 
-              {/* Botón de cerrar sesión */}
               <motion.button
                 onClick={handleLogout}
-                className="p-3 w-full text-left bg-red-600 text-white rounded-md font-bold mt-4 hover:bg-red-700 transition"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
+                className="mt-auto flex items-center gap-3 p-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
               >
-                Cerrar Sesión
+                <FaSignOutAlt />
+                <span>Cerrar Sesión</span>
               </motion.button>
             </motion.div>
           </>
